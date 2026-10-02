@@ -1,0 +1,120 @@
+[id="127hub-happy-license-gate"] {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  display: grid !important;
+  place-items: center !important;
+  box-sizing: border-box !important;
+  padding: 24px !important;
+  overflow: auto !important;
+  background: rgba(4, 7, 10, 0.96) !important;
+  color: #f5f7f8 !important;
+  font-family: "Segoe UI", sans-serif !important;
+  pointer-events: auto !important;
+}
+
+[id="127hub-happy-license-gate"][hidden],
+[id="127hub-happy-license-gate"] .happy-license-form[hidden] {
+  display: none !important;
+}
+
+[id="127hub-happy-license-gate"] .happy-license-panel {
+  box-sizing: border-box !important;
+  width: min(420px, 100%) !important;
+  padding: 30px !important;
+  border: 1px solid rgba(141, 185, 175, 0.3) !important;
+  border-radius: 8px !important;
+  background: #111719 !important;
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.55) !important;
+}
+
+[id="127hub-happy-license-gate"] .happy-license-eyebrow {
+  margin: 0 0 10px !important;
+  color: #8bbba9 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+[id="127hub-happy-license-gate"] h1 {
+  margin: 0 0 12px !important;
+  color: #f5f7f8 !important;
+  font-size: 22px !important;
+  line-height: 1.25 !important;
+}
+
+[id="127hub-happy-license-gate"] .happy-license-status {
+  margin: 0 0 20px !important;
+  color: #b8c4c3 !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  overflow-wrap: anywhere !important;
+}
+
+[id="127hub-happy-license-gate"] .happy-license-form label {
+  display: block !important;
+  margin: 0 0 7px !important;
+  color: #d8e1df !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+[id="127hub-happy-license-gate"] .happy-license-form input {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-height: 44px !important;
+  padding: 10px 12px !important;
+  border: 1px solid #435452 !important;
+  border-radius: 5px !important;
+  background: #0a0e0f !important;
+  color: #f5f7f8 !important;
+  font: 14px/1.4 monospace !important;
+}
+
+[id="127hub-happy-license-gate"] .happy-license-form input:focus {
+  outline: 2px solid #79b7a1 !important;
+  outline-offset: 2px !important;
+}
+
+[id="127hub-happy-license-gate"] .happy-license-actions {
+  display: flex !important;
+  gap: 10px !important;
+  margin-top: 14px !important;
+}
+
+[id="127hub-happy-license-gate"] button {
+  min-height: 42px !important;
+  padding: 9px 14px !important;
+  border: 1px solid transparent !important;
+  border-radius: 5px !important;
+  font: 600 13px/1.2 "Segoe UI", sans-serif !important;
+  cursor: pointer !important;
+}
+
+[id="127hub-happy-license-gate"] button:disabled {
+  cursor: wait !important;
+  opacity: 0.65 !important;
+}
+
+[id="127hub-happy-license-gate"] .happy-license-primary {
+  flex: 1 !important;
+  background: #20745e !important;
+  color: #fff !important;
+}
+
+[id="127hub-happy-license-gate"] .happy-license-retry {
+  border-color: #435452 !important;
+  background: #1c2526 !important;
+  color: #d8e1df !important;
+}
+
+@media (max-width: 480px) {
+  [id="127hub-happy-license-gate"] {
+    padding: 16px !important;
+  }
+
+  [id="127hub-happy-license-gate"] .happy-license-panel {
+    padding: 22px !important;
+  }
+}

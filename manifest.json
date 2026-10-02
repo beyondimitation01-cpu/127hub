@@ -50,9 +50,22 @@
     "default_title": "127HUB AI"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background-loader.js"
   },
   "content_scripts": [
+    {
+      "matches": [
+        "https://*.lovable.dev/*",
+        "https://lovable.dev/*"
+      ],
+      "css": [
+        "powerkits-license-gate.css"
+      ],
+      "js": [
+        "happy-license-ui.js"
+      ],
+      "run_at": "document_start"
+    },
     {
       "matches": [
         "https://*.lovable.dev/*",
@@ -86,7 +99,6 @@
       ],
       "js": [
         "hwFingerprint.js",
-        "content.js",
         "ota-update.js"
       ],
       "run_at": "document_start"
