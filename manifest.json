@@ -1,0 +1,116 @@
+{
+  "manifest_version": 3,
+  "name": "127HUB AI",
+  "version": "35.0",
+  "description": "127HUB AI    — premium productivity tools for the Lovable editor.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs",
+    "cookies",
+    "alarms",
+    "sidePanel",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://*.lovable.dev/*",
+    "https://lovable.dev/*",
+    "https://api.lovable.dev/*",
+    "https://lovable-api.com/*",
+    "https://ai.127hub.com/*",
+    "https://*.lovable.app/*",
+    "https://*.eklas.dev/*",
+    "https://ai.127hub.com/*",
+    "https://keygen.eklas.dev/*",
+    "https://hzlajptzsscmzjblodgb.supabase.co/*",
+    "https://api.github.com/*",
+    "https://raw.githubusercontent.com/*",
+    "https://ultraxlovableilimitado.vercel.app/*",
+    "https://openrouter.ai/*",
+    "https://api.openai.com/*",
+    "https://api.anthropic.com/*",
+    "https://generativelanguage.googleapis.com/*",
+    "https://api.groq.com/*",
+    "https://api.deepseek.com/*",
+    "https://api.mistral.ai/*",
+    "https://api.x.ai/*",
+    "https://api.together.xyz/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*",
+    "https://*/*"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "127HUB AI"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.lovable.dev/*",
+        "https://lovable.dev/*"
+      ],
+      "js": [
+        "drag-blocker.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://*.lovable.dev/*",
+        "https://lovable.dev/*",
+        "https://api.lovable.dev/*"
+      ],
+      "js": [
+        "jszip.min.js",
+        "gitMode.js",
+        "pageHook.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://*.lovable.dev/*",
+        "https://lovable.dev/*",
+        "https://api.lovable.dev/*"
+      ],
+      "js": [
+        "hwFingerprint.js",
+        "content.js",
+        "ota-update.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "payload.js",
+        "hwFingerprint.js",
+        "powerkits-core.js",
+        "powerkits-core.css",
+        "jszip.min.js",
+        "gitMode.js",
+        "pageHook.js",
+        "drag-blocker.js",
+        "icons/*.png",
+        "loop.mp4"
+      ],
+      "matches": [
+        "https://*.lovable.dev/*",
+        "https://lovable.dev/*",
+        "https://api.lovable.dev/*"
+      ]
+    }
+  ]
+}

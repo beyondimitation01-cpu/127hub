@@ -1,0 +1,15 @@
+{
+  "extensionName": "127HUB AI",
+  "adminContactLink": "https://t.me/lusuferr",
+  "channelLink": "https://t.me/lusufer127",
+  "adminTelegram": "lusuferr",
+  "channelTelegram": "lusufer127",
+  "serverUrl": "ai.127hub.com",
+  "secondaryServerUrl": "ai.127hub.com",
+  "switchServerUrl": "https://ai.127hub.com/api/switch",
+  "defaultCredits": 0,
+  "footerText": "127HUB.COM",
+  "footerLink": "https://127hub.com/",
+  "themeColor": "green",
+  "themeName": "Green (Emerald Cyber Green)"
+}
