@@ -98,8 +98,7 @@
         "https://api.lovable.dev/*"
       ],
       "js": [
-        "hwFingerprint.js",
-        "ota-update.js"
+        "hwFingerprint.js"
       ],
       "run_at": "document_start"
     }

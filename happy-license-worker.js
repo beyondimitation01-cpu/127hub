@@ -220,6 +220,18 @@
     return { activate, authorize, getStatus };
   }
 
+  function createFeatureLoader(chromeApi) {
+    return async sender => {
+      const tabId = sender && sender.tab && sender.tab.id;
+      if (!Number.isInteger(tabId)) throw new Error("No page tab is available");
+      await chromeApi.scripting.executeScript({
+        target: { tabId },
+        files: ["content.js", "ota-update.js"],
+        injectImmediately: true
+      });
+    };
+  }
+
   function installMessageGate(runtime, gate, releaseFeatures) {
     const event = runtime && runtime.onMessage;
     if (!event || typeof event.addListener !== "function") return false;
@@ -326,7 +338,7 @@
     }
   }
 
-  const api = { createHappyLicenseGate, createIndexedDbStore, installMessageGate };
+  const api = { createHappyLicenseGate, createFeatureLoader, createIndexedDbStore, installMessageGate };
   root.HappyLicenseGate = api;
   if (typeof module === "object" && module.exports) module.exports = api;
 
@@ -336,15 +348,7 @@
         store: createIndexedDbStore(root.indexedDB),
         fetchImpl: root.fetch.bind(root)
       });
-      api.installed = installMessageGate(root.chrome.runtime, gate, async sender => {
-        const tabId = sender && sender.tab && sender.tab.id;
-        if (!Number.isInteger(tabId)) throw new Error("No page tab is available");
-        await root.chrome.scripting.executeScript({
-          target: { tabId },
-          files: ["content.js"],
-          injectImmediately: true
-        });
-      });
+      api.installed = installMessageGate(root.chrome.runtime, gate, createFeatureLoader(root.chrome));
       if (!api.installed) throw new Error("Unable to install additional license gate");
     } catch (error) {
       api.installed = false;

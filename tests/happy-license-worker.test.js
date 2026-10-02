@@ -1,6 +1,8 @@
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const vm = require("node:vm");
 const test = require("node:test");
-const { createHappyLicenseGate, installMessageGate } = require("../happy-license-worker.js");
+const { createFeatureLoader, createHappyLicenseGate, installMessageGate } = require("../happy-license-worker.js");
 
 function makeStore(initial = {}) {
   const state = { ...initial };
@@ -207,4 +209,71 @@ test("reports valid licensing separately when feature initialization fails", asy
   assert.equal(activation.valid, true);
   assert.equal(activation.ready, false);
   assert.equal(activation.status, "initialization_failed");
+});
+
+test("injects the original content and OTA scripts in baseline order", async () => {
+  let injection;
+  const loadFeatures = createFeatureLoader({
+    scripting: {
+      async executeScript(details) {
+        injection = details;
+      }
+    }
+  });
+
+  await loadFeatures({ tab: { id: 12 } });
+
+  assert.deepEqual(injection, {
+    target: { tabId: 12 },
+    files: ["content.js", "ota-update.js"],
+    injectImmediately: true
+  });
+});
+
+test("shows a retryable error when the extension message never responds", async () => {
+  function createElement() {
+    return {
+      children: [],
+      listeners: {},
+      append(...children) { this.children.push(...children); },
+      addEventListener(name, listener) { this.listeners[name] = listener; },
+      setAttribute() {},
+      focus() {},
+      remove() { this.isConnected = false; }
+    };
+  }
+
+  const page = createElement();
+  const window = {};
+  window.top = window;
+  window.self = window;
+  const context = {
+    window,
+    document: {
+      documentElement: page,
+      createElement,
+      getElementById() { return null; },
+      addEventListener() {}
+    },
+    chrome: {
+      runtime: {
+        sendMessage() { return new Promise(() => {}); },
+        onMessage: { addListener() {} }
+      }
+    },
+    setTimeout(callback) {
+      queueMicrotask(callback);
+      return 1;
+    },
+    clearTimeout() {}
+  };
+
+  vm.runInNewContext(fs.readFileSync(require.resolve("../happy-license-ui.js"), "utf8"), context);
+  await new Promise(resolve => setImmediate(resolve));
+
+  const panel = page.children[0].children[0];
+  const status = panel.children[2];
+  const form = panel.children[3];
+  assert.match(status.textContent, /did not respond in time/i);
+  assert.equal(form.hidden, false);
 });

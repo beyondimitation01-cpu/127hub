@@ -1,13 +1,27 @@
 (function () {
   if (window.top !== window.self || document.getElementById("127hub-happy-license-gate")) return;
 
+  const MESSAGE_TIMEOUT_MS = 15000;
+
   function message(action, data) {
-    return chrome.runtime.sendMessage(Object.assign({ action }, data || {})).catch(error => ({
+    let timeoutId;
+    const timeout = new Promise(resolve => {
+      timeoutId = setTimeout(() => resolve({
+        ok: false,
+        valid: false,
+        status: "timeout",
+        message: "The extension did not respond in time. Retry the check or reload the page."
+      }), MESSAGE_TIMEOUT_MS);
+    });
+    return Promise.race([
+      Promise.resolve().then(() => chrome.runtime.sendMessage(Object.assign({ action }, data || {}))),
+      timeout
+    ]).catch(error => ({
       ok: false,
       valid: false,
       status: "unavailable",
       message: error && error.message || "The extension could not check the additional license."
-    }));
+    })).finally(() => clearTimeout(timeoutId));
   }
 
   function mount() {
